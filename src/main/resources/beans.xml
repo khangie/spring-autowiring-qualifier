@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Allow for injection from non-default constructor to inject Heart into Body using @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Because Spring tries to @Autowire byType first then byName, it uses this instantiation because the name "heart" matches -->
+    <!-- <bean id="heart" class="com.seleniumexpress.autowired.Heart"></bean>-->
+
+    <!-- Use a @Qualifier annotation to specifically choose this instantiation -->
+    <bean id="humanHeart" class="com.seleniumexpress.autowired.Heart">
+        <property name="nameOfAnimal" value="Human"/>
+        <property name="noOfHeart" value="1"/>
+    </bean>
+
+    <!-- This bean is not used because byName does not match -->
+    <bean id="octopusHeart" class="com.seleniumexpress.autowired.Heart">
+        <property name="nameOfAnimal" value="Octopus"/>
+        <property name="noOfHeart" value="3"/>
+    </bean>
+
+    <bean id="human" class="com.seleniumexpress.autowired.Human"></bean>
+
+    <!-- OPTION 1: Automatically autowire in dependencies based on matching the dependency name and the id of the referenced object using setter injection -->
+    <!--<bean id="human" class="com.seleniumexpress.autowired.Human" autowire="byName"></bean>-->
+
+    <!-- OPTION 2: Another autowire option byType using setter injection -->
+    <!--<bean id="human" class="com.seleniumexpress.autowired.Human" autowire="byType"></bean>-->
+
+    <!-- OPTION 3: Another autowire option using constructor -->
+    <!--<bean id="human" class="com.seleniumexpress.autowired.Human" autowire="constructor"></bean>-->
+
+
+</beans>
+
